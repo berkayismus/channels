@@ -11,4 +11,7 @@ class Constants {
   /// ağ durumu desteklenmeyen bir duruma geçtiğinde, örn; VPN, veya androidde ethernet
   /// bunu kullanacağız
   static const unknown = 0xCC;
+
+  // stream'in sonunu belirtir
+  static const eof = -0xFFFFFF;
 }
