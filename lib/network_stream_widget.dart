@@ -20,9 +20,16 @@ class NetworkStreamWidget extends StatelessWidget {
         .distinct()
         .map((dynamic event) => intToConnection(event as int));
 
-    return const _NetworkStateWidget(
-      message: 'Not setup',
-      color: Colors.red,
+    // * networkStream'i dinleyip, bir değişiklik olduğunda ekranda gösterelim
+    return StreamBuilder<Connection>(
+      stream: networkStream,
+      initialData: Connection.disconnected,
+      builder: (BuildContext context, AsyncSnapshot<Connection> snapshot) {
+        final connection = snapshot.data ?? Connection.unknown;
+        final message = getConnectionMessage(connection);
+        final color = getConnectionColor(connection);
+        return _NetworkStateWidget(message: message, color: color);
+      },
     );
   }
 }
