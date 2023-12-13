@@ -1,3 +1,4 @@
+import 'package:channels/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,6 +14,12 @@ class NetworkStreamWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // bağlantı durumu değiştiğinde, onu bir connection tutan stream'e mapler
+    final networkStream = _eventChannel
+        .receiveBroadcastStream()
+        .distinct()
+        .map((dynamic event) => intToConnection(event as int));
+
     return const _NetworkStateWidget(
       message: 'Not setup',
       color: Colors.red,
