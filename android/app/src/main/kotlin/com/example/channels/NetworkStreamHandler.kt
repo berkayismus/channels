@@ -12,7 +12,10 @@ class NetworkStreamHandler(private var activity: Activity?) : EventChannel.Strea
 
     private var eventSink: EventChannel.EventSink? = null
 
-    override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {}
+    override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+        eventSink = events
+        startListeningNetworkChanges()
+    }
 
     override fun onCancel(arguments: Any?) {}
 
