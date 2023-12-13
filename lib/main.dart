@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'network_stream_widget.dart';
 
-// * FLUTTER'DA PLATFORM CHANNELS
-// * dart'tan native platform apilerinin cagrılmasını kolaylastıran bir dizi api'dir
-// * bunlar; MessageChannel, MethodChannel, EventChannel
-// * Bu API'ler, metodları çağırmak ve Java/Kotlin veya Objective-C/Swift ve Dart'ta yazılan kodlar arasında veri aktarmak için bir arayüz sağlar.
-
 void main() {
   runApp(_MyApp());
 }
