@@ -9,6 +9,8 @@ import Reachability
     private let networkEventChannel = "platform_channel_events/connectivity"
     private let imageEventChannel = "platform_channel_events/image"
 
+    
+
     override func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
