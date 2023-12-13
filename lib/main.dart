@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'image_stream_widget.dart';
 import 'network_stream_widget.dart';
 
 void main() {
@@ -31,10 +32,10 @@ class _MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Column(
+      body: const Column(
         children: [
-          const NetworkStreamWidget(),
-          Expanded(child: Container()),
+          NetworkStreamWidget(),
+          Expanded(child: ImageStreamWidget()),
         ],
       ),
     );

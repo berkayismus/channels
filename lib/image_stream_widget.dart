@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:typed_data';
 
+import 'package:channels/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// ImageStreamWidget handles and displays streaming of image bytes
 class ImageStreamWidget extends StatefulWidget {
@@ -17,6 +18,8 @@ class _ImageStreamWidgetState extends State<ImageStreamWidget> {
   int? imageSize;
   StreamSubscription<dynamic>? imageSubscription;
   bool streamComplete = false;
+
+  final eventChannel = const EventChannel('platform_channel_events/image');
 
   @override
   Widget build(BuildContext context) {
@@ -69,5 +72,31 @@ class _ImageStreamWidgetState extends State<ImageStreamWidget> {
     super.dispose();
   }
 
-  void startImageStream() {}
+  // oluşturduğumuz event channel'dan bize verilen stream'i dinle
+  // her bir data akışında onReceiveImageByte metodunu tetikle
+  void startImageStream() {
+    imageSubscription = eventChannel.receiveBroadcastStream(
+        {'quality': 0.9, 'chunkSize': 100}).listen(onReceiveImageByte);
+  }
+
+  void onReceiveImageByte(dynamic event) {
+    // ilk event olup/olmadığı kontrol ediliyor.
+    // ilk event: dosyanın boyutu
+    if (imageSize == null && event is int && event != Constants.eof) {
+      setState(() => imageSize = event);
+      return;
+    }
+
+    // event bitti mi diye kontrol et
+    // stream'i sonlandır
+    if (event == Constants.eof) {
+      imageSubscription?.cancel();
+      setState(() => streamComplete = true);
+      return;
+    }
+
+    // image byte'larını al ve birleştir
+    final byteArray = (event as List<dynamic>).cast<int>();
+    setState(() => imageBytes.addAll(byteArray));
+  }
 }
